@@ -142,7 +142,7 @@ def decrypt_pem(pem_data, passphrase):
 
     else:
         # Not encrypted PEM
-        debug('Not decrypting private key')
+        debug('Private key is not encrypted, skipping decryption')
         decrypt_object = None
         # Cut extra text data and leave unencrypted private key only
         lines = lines[1:-1]
@@ -298,7 +298,7 @@ def main():
         # Well, that looks fatal
         sys.exit(1)
     else:
-        info("Reading configuration file " + config_path)
+        info("Reading configuration file " + os.path.realpath(config_path))
         try:
             config.read(config_path)
         except Exception as e:
@@ -379,6 +379,8 @@ def main():
         error("Could not get your username")
         # Well, that looks fatal
         sys.exit(1)
+    else:
+        info('Your username seems to be ' + my_username)
 
     # Get vault file path
     vault_path = os.path.abspath(os.path.join(config_dir, os.path.expanduser(config.get('global', 'vault'))))
@@ -402,10 +404,12 @@ def main():
             sys.exit(1)
 
         # Now, get secret from vault
+        debug("Looking for decryptable secret in vault")
         found_secret = False
         for chunk in vault[my_username]:
             s = decrypt_string(my_private_key, chunk['data'])
             if not s is None:
+                info("Successfult decrypted secret")
                 found_secret = True
                 secret = s
         if not found_secret:
