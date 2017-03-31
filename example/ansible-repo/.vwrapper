@@ -1,0 +1,3 @@
+#!/bin/sh
+
+./extensions/sk-manager/sk-manager.py show

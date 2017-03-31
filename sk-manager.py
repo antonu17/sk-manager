@@ -414,7 +414,9 @@ def main():
             sys.exit(1)
 
     # Now, do the stuff
-    if args.action == 'init' or args.action == 'update' :
+    if args.action == 'show':
+        print(secret)
+    elif args.action == 'init' or args.action == 'update' :
         if not my_username in public_keys:
             warning("I don's see you in list of users. You are very unlikely to update or read generated vault file.")
 
@@ -433,9 +435,6 @@ def main():
             error("Failed to save vault!")
             # Well, that looks fatal
             sys.exit(1)
-
-    if args.action == 'show':
-        print(secret)
 
 if __name__ == "__main__":
     main()

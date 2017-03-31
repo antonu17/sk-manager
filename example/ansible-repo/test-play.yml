@@ -1,0 +1,12 @@
+---
+
+- hosts: all
+  connection: local
+  tasks:
+    - name: print public var
+      debug:
+        var: public_var
+    - name: print private var
+      debug:
+        var: private_var
+
