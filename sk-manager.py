@@ -409,7 +409,7 @@ def main():
                 found_secret = True
                 secret = s
         if not found_secret:
-            error("Failed to decrypt shared secret. Probably private key is wrong.")
+            error("Could not find secret in vault file.")
             # Well, that looks fatal
             sys.exit(1)
 
